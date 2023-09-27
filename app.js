@@ -12,14 +12,12 @@ const mongoose = require("mongoose");
 
 
 const db = mongoose.connection;
-main().catch(err => console.log(err));
 
-async function main() {
-  await mongoose.connect(process.env.MONGODB_URI, {
+mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     dbName: 'test',
-  });
-}
+  })
+
 db.on("error", (error) => console.error(error));
 db.once("open", function () {
   console.log("Connected");
