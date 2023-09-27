@@ -10,11 +10,17 @@ const app = express()
 
 const mongoose = require("mongoose");
 
-mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true})
+
 const db = mongoose.connection;
+main().catch(err => console.log(err));
+
+async function main() {
+  await mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true});
+  // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
+}
 db.on("error", (error) => console.error(error));
 db.once("open", function () {
-  console.log("connected");
+  console.log("Connected");
 });
 
 // view engine setup
