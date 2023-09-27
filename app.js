@@ -3,11 +3,19 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+require('dotenv').config()
 var indexRouter = require('./routes/index');
 var formRouter = require('./routes/form');
+const app = express()
 
-var app = express();
+const mongoose = require("mongoose");
+
+mongoose.connect(process.env.MONGODB_URI)
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error: "));
+db.once("open", function () {
+  console.log("Connected successfully");
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -37,5 +45,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
 
 module.exports = app;

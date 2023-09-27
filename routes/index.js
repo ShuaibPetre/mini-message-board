@@ -23,9 +23,12 @@ const messages = [
     added: new Date()
   }
 ];
+
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: "Mini Messageboard", messages: messages });
+
 });
 router.post('/new', (req, res) => {
   messages.push({text: req.body.message, user: req.body.name, added: new Date()});
